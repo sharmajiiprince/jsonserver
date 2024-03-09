@@ -53,6 +53,14 @@
       "email": "anil123@test.com",
       "password": "123456",
       "role": "admin"
+    },
+    {
+      "id": "pa54rcq4x",
+      "name": "xyz",
+      "email": "xyzl23@gmail.com",
+      "password": "123456",
+      "role": "worker",
+      "image": ""
     }
   ],
   "product": [
