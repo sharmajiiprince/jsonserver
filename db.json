@@ -153,6 +153,14 @@
       "color": "black",
       "weight": "10kg",
       "id": "8d39"
+    },
+    {
+      "id": "t5hnzew0g",
+      "name": "sampoo",
+      "price": "200",
+      "color": "white",
+      "weight": "250g",
+      "by": "shweta"
     }
   ]
 }

@@ -20,7 +20,6 @@ server.use(jsonServer.bodyParser);
 
 server.get('/api/user', (req, res) => {
   const users = router.db.get('user').value();
-  console.log("lknfeovi")
   res.json(users);
 });
 
@@ -165,9 +164,9 @@ server.delete('/api/user/:id', (req, res) => {
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-server.post('/api/login', (req, res) => {
+server.get('/api/login', (req, res) => {
   const { email, password } = req.body;
-
+  console.log(email,password)
   // Check if email and password are provided
   if (!email || !password) {
     return res.status(400).json({ error: "Please provide email and password" });
@@ -177,19 +176,19 @@ server.post('/api/login', (req, res) => {
   if (!user) {
     return res.status(404).json({ error: "User not found" });
   }
-  bcrypt.compare(password, user.password, (err, result) => {
-    if (err) {
-      return res.status(500).json({ error: "Internal server error" });
-    }
 
-    if (!result) {
-      return res.status(401).json({ error: "Invalid password" });
-    }
+  // bcrypt.compare(password, user.password, (err, result) => {
+  //   if (err) {
+  //     return res.status(500).json({ error: "Internal server error" });
+  //   }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, 'your_secret_key', { expiresIn: '1h' });
+  //   if (!result) {
+  //     return res.status(401).json({ error: "Invalid password" });
+  //   }
+  // });
 
-    res.json({ message: "Login successful", token: token });
-  });
+  const token = jwt.sign({ id: user.id, name:user.name, role:user.role, email: user.email }, 'your_secret_key', { expiresIn: '1h' });
+  res.json({ message: "Login successful", token: token });
 });
 
 
