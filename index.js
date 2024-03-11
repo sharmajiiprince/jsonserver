@@ -229,6 +229,11 @@ function writeDataToFile(data) {
   fs.writeFileSync(dbFilePath, JSON.stringify(data, null, 2));
 }
 
+// Root route handler
+app.get('/', (req, res) => {
+  res.send('Server is running!');
+});
+
 app.get('/api/user', (req, res) => {
   const data = readDataFromFile();
   res.json(data.user);
