@@ -69,6 +69,14 @@
       "password": "123456",
       "role": "worker",
       "image": ""
+    },
+    {
+      "id": "qmps38anu",
+      "name": "rohan kumar",
+      "email": "rohan@gmail.com",
+      "password": "123456",
+      "role": "admin",
+      "image": ""
     }
   ],
   "product": [

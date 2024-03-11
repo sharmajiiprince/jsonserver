@@ -21,17 +21,12 @@ function readDataFromFile() {
     fs.writeFileSync(__dirname + "/db.json", JSON.stringify(data, null, 2));
   }
 
-// Initialize lowdb
-// const low = require('lowdb');
-// const FileSync = require('lowdb/adapters/FileSync');
-// const adapter = new FileSync();
-// const db = low(adapter);
-
-// db.defaults({ user: [] }).write();
 
 server.get('/api/user', (req, res) => {
-  const users = router.db.get('user').value();
-  res.json(users);
+  //const users = router.db.get('user').value();
+  const data = readDataFromFile();
+  //console.log(data)
+  res.json(data.user);
 });
 
 server.post('/api/user', (req, res) => {
@@ -40,7 +35,7 @@ server.post('/api/user', (req, res) => {
   if (!name || !email || !password || !role) {
     return res.status(400).json({ error: "Please provide name, email, password, and role" });
   }
-  console.log("42",req.body);
+  //console.log("42",req.body);
   const newUser = {
     id: Math.random().toString(36).substr(2, 9), 
     name,
@@ -54,7 +49,7 @@ server.post('/api/user', (req, res) => {
   // res.status(201).json(newUser);
 
   const data = readDataFromFile();
-  console.log("56",data.user)
+  //console.log("56",data.user)
   data.user.push(newUser);
   writeDataToFile(data);
   res.status(201).json(newUser);
