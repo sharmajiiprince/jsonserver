@@ -61,6 +61,14 @@
       "password": "123456",
       "role": "worker",
       "image": ""
+    },
+    {
+      "id": "w55sg0mq7",
+      "name": "rohit kumar",
+      "email": "rohit@gmail.com",
+      "password": "123456",
+      "role": "worker",
+      "image": ""
     }
   ],
   "product": [

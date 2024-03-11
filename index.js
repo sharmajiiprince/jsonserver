@@ -4,11 +4,22 @@ const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 const cors = require('cors');
 const port = process.env.PORT || 3030;
+const fs=require("fs");
 
 server.use(cors());
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
+//read data from json
+function readDataFromFile() {
+    const rawData = fs.readFileSync(__dirname + "/db.json");
+    return JSON.parse(rawData);
+  }
+  
+  // Write data to JSON file
+  function writeDataToFile(data) {
+    fs.writeFileSync(__dirname + "/db.json", JSON.stringify(data, null, 2));
+  }
 
 // Initialize lowdb
 // const low = require('lowdb');
@@ -29,7 +40,7 @@ server.post('/api/user', (req, res) => {
   if (!name || !email || !password || !role) {
     return res.status(400).json({ error: "Please provide name, email, password, and role" });
   }
-  console.log(req.body)
+  console.log("42",req.body);
   const newUser = {
     id: Math.random().toString(36).substr(2, 9), 
     name,
@@ -39,7 +50,13 @@ server.post('/api/user', (req, res) => {
     image
   };
 
-  router.db.get('user').push(newUser).write();
+  // router.db.get('user').push(newUser).write();
+  // res.status(201).json(newUser);
+
+  const data = readDataFromFile();
+  console.log("56",data.user)
+  data.user.push(newUser);
+  writeDataToFile(data);
   res.status(201).json(newUser);
 });
 
