@@ -29,6 +29,19 @@ server.get('/api/user', (req, res) => {
   res.json(data.user);
 });
 
+server.get('/getblood', (req, res) => {
+  const data = readDataFromFile();
+  const { group,type} = req.body;
+  const bloodGroup = data.blood.find(blood => Object.keys(blood)[0] === group);
+
+  if (type == 'donner') {
+    res.json(bloodGroup[group][0])
+  } 
+  if (type == 'acceptor') {
+    res.json(bloodGroup[group][1]);
+  } 
+});
+
 server.post('/api/user', (req, res) => {
   const { name, email, password, role, image } = req.body;
 
