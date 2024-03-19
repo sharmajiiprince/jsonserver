@@ -6,7 +6,21 @@ const cors = require('cors');
 const port = process.env.PORT || 3030;
 const fs=require("fs");
 
-server.use(cors());
+server.use(cors({
+  origin:['http://localhost:3030','https://jsonserver-iota.vercel.app/user','https://jsonserver-iota.vercel.app/product'],
+  optionsSuccessStatus: 200
+}));
+// var whitelist = ['http://example1.com', 'http://example2.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
+// server.use(corsOptions());
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
@@ -32,6 +46,7 @@ server.get('/api/user', (req, res) => {
 server.get('/getblood', (req, res) => {
   const data = readDataFromFile();
   const { group,type} = req.body;
+  console.log(data);
   const bloodGroup = data.blood.find(blood => Object.keys(blood)[0] === group);
 
   if (type == 'donner') {
@@ -41,6 +56,7 @@ server.get('/getblood', (req, res) => {
     res.json(bloodGroup[group][1]);
   } 
 });
+
 
 server.post('/api/user', (req, res) => {
   const { name, email, password, role, image } = req.body;
