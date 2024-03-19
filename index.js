@@ -6,11 +6,18 @@ const cors = require('cors');
 const port = process.env.PORT || 3030;
 const fs=require("fs");
 
+// server.use(cors({
+//   origin:['http://localhost:3030','https://jsonserver-iota.vercel.app/user','https://jsonserver-iota.vercel.app/product'],
+//   methods: ['GET', 'PUT', 'POST', 'DELETE'],
+//   credentials:true,
+//   optionsSuccessStatus:200
+// }));
+
 server.use(cors({
-  origin:['http://localhost:3030','https://jsonserver-iota.vercel.app/user','https://jsonserver-iota.vercel.app/product'],
+  origin: "https://jsonserver-iota.vercel.app",
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
   credentials:true,
-  optionsSuccessStatus:200
+  optionsSuccessStatus: 200, 
 }));
 
 server.use(middlewares);
