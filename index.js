@@ -1,279 +1,35 @@
-// const jsonServer = require("json-server");
-// const server = jsonServer.create();
-// const router = jsonServer.router("db.json");
-// const middlewares = jsonServer.defaults();
-// const cors = require('cors');
-// const port = process.env.PORT || 3030;
-// const fs=require("fs");
-
-// server.use(cors({
-//   origin:['http://localhost:3030','https://jsonserver-iota.vercel.app/user','https://jsonserver-iota.vercel.app/product'],
-//   optionsSuccessStatus: 200
-// }));
-
-// server.use(middlewares);
-// server.use(jsonServer.bodyParser);
-
-// //read data from json
-// function readDataFromFile() {
-//     const rawData = fs.readFileSync(__dirname + "/db.json");
-//     return JSON.parse(rawData);
-//   }
-  
-//   // Write data to JSON file
-//   function writeDataToFile(data) {
-//     fs.writeFileSync(__dirname + "/db.json", JSON.stringify(data, null, 2));
-//   }
-
-
-// server.get('/api/user', (req, res) => {
-//   //const users = router.db.get('user').value();
-//   const data = readDataFromFile();
-//   console.log(data)
-//   res.json(data.user);
-// });
-
-// server.get('/getblood', (req, res) => {
-//   const data = readDataFromFile();
-//   const { group,type} = req.body;
-//   console.log(data);
-//   const bloodGroup = data.blood.find(blood => Object.keys(blood)[0] === group);
-
-//   if (type == 'donner') {
-//     res.json(bloodGroup[group][0])
-//   } 
-//   if (type == 'acceptor') {
-//     res.json(bloodGroup[group][1]);
-//   } 
-// });
-
-
-// server.post('/api/user', (req, res) => {
-//   const { name, email, password, role, image } = req.body;
-
-//   if (!name || !email || !password || !role) {
-//     return res.status(400).json({ error: "Please provide name, email, password, and role" });
-//   }
-//   console.log("42",req.body);
-//   const newUser = {
-//     id: Math.random().toString(36).substr(2, 9), 
-//     name,
-//     email,
-//     password,
-//     role,
-//     image
-//   };
-
-//   // router.db.get('user').push(newUser).write();
-//   // res.status(201).json(newUser);
-
-//   const data = readDataFromFile();
-//   //console.log("56",data.user)
-//   data.user.push(newUser);
-//   writeDataToFile(data);
-//   res.status(201).json(newUser);
-// });
-
-// server.post('/api/product', (req, res) => {
-//   const { name, price, color, weight, by } = req.body;
-
-//   if (!name || !price || !color || !weight || !by) {
-//     return res.status(400).json({ error: "Please provide name, price, color, weight, and by" });
-//   }
-
-//   const newProduct = {
-//     id: Math.random().toString(36).substr(2, 9),
-//     name,
-//     price,
-//     color,
-//     weight,
-//     by
-//   };
-
-//   router.db.get('product').push(newProduct).write();
-//   res.status(201).json(newProduct);
-// });
-
-// server.put('/api/product/:id', (req, res) => {
-//   const productId = req.params.id;
-//   const { name, price, color, weight, by } = req.body;
-
-//   // Find the product by ID
-//   const product = router.db.get('product').find({ id: productId }).value();
-
-//   if (!product) {
-//     return res.status(404).json({ error: "Product not found" });
-//   }
-
-//   // Update the product properties if provided
-//   if (name) {
-//     product.name = name;
-//   }
-//   if (price) {
-//     product.price = price;
-//   }
-//   if (color) {
-//     product.color = color;
-//   }
-//   if (weight) {
-//     product.weight = weight;
-//   }
-//   if (by) {
-//     product.by = by;
-//   }
-
-//   // Update the product in the database
-//   router.db.get('product').find({ id: productId }).assign(product).write();
-
-//   res.json(product);
-// });
-
-// server.put('/api/product/:id', (req, res) => {
-//   const productId = req.params.id;
-//   const { name, price, color, weight, by } = req.body;
-
-//   const product = router.db.get('product').find({ id: productId }).value();
-
-//   if (!product) {
-//     return res.status(404).json({ error: "Product not found" });
-//   }
-
-//   const updatedProduct = {
-//     ...product,
-//     name: name || product.name,
-//     price: price || product.price,
-//     color: color || product.color,
-//     weight: weight || product.weight,
-//     by: by || product.by
-//   };
-
-//   router.db.get('product').find({ id: productId }).assign(updatedProduct).write();
-  
-//   res.json(updatedProduct);
-// });
-
-// server.put('/api/user/:id', (req, res) => {
-//   const userId = req.params.id;
-//   const { name, email, password, role, image } = req.body;
-
-//   const user = router.db.get('user').find({ id: userId }).value();
-
-//   if (!user) {
-//     return res.status(404).json({ error: "User not found" });
-//   }
-
-//   // Update user properties if provided in the request body
-//   user.name = name || user.name;
-//   user.email = email || user.email;
-//   user.password = password || user.password;
-//   user.role = role || user.role;
-//   user.image = image || user.image;
-
-//   // Update the user in the database
-//   router.db.get('user').find({ id: userId }).assign(user).write();
-
-//   res.json(user);
-// });
-
-
-// server.delete('/api/user/:id', (req, res) => {
-//   const userId = req.params.id;
-
-//   const user = router.db.get('user').find({ id: userId }).value();
-
-//   if (!user) {
-//     return res.status(404).json({ error: "User not found" });
-//   }
-
-//   // Remove the user from the database
-//   router.db.get('user').remove({ id: userId }).write();
-
-//   res.json({ message: "User deleted successfully", deletedUser: user });
-// });
-
-
-// const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcrypt');
-
-// server.get('/api/login', (req, res) => {
-//   const { email, password } = req.body;
-//   console.log(email,password)
-//   // Check if email and password are provided
-//   if (!email || !password) {
-//     return res.status(400).json({ error: "Please provide email and password" });
-//   }
-
-//   const user = router.db.get('user').find({ email: email }).value();
-//   if (!user) {
-//     return res.status(404).json({ error: "User not found" });
-//   }
-
-//   // bcrypt.compare(password, user.password, (err, result) => {
-//   //   if (err) {
-//   //     return res.status(500).json({ error: "Internal server error" });
-//   //   }
-
-//   //   if (!result) {
-//   //     return res.status(401).json({ error: "Invalid password" });
-//   //   }
-//   // });
-
-//   const token = jwt.sign({ id: user.id, name:user.name, role:user.role, email: user.email }, 'your_secret_key', { expiresIn: '1h' });
-//   res.json({ message: "Login successful", token: token });
-// });
-
-
-// server.use(router);
-
-// server.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
-
-
-
-//final code .
 const jsonServer = require("json-server");
 const server = jsonServer.create();
 const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 const cors = require('cors');
 const port = process.env.PORT || 3030;
-const fs = require("fs");
+const fs=require("fs");
 
-server.use(cors());
-
-// Update the CORS configuration to allow multiple origins
-const whitelist = ['http://localhost:3030', 'https://jsonserver-iota.vercel.app'];
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+server.use(cors({
+  origin:['http://localhost:3030','https://jsonserver-iota.vercel.app/user','https://jsonserver-iota.vercel.app/product'],
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-};
-server.use(cors(corsOptions));
+  credentials:true,
+  optionsSuccessStatus:200
+}));
 
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
-// Read data from JSON file
+//read data from json
 function readDataFromFile() {
-  const rawData = fs.readFileSync(__dirname + "/db.json");
-  return JSON.parse(rawData);
-}
+    const rawData = fs.readFileSync(__dirname + "/db.json");
+    return JSON.parse(rawData);
+  }
+  
+  // Write data to JSON file
+  function writeDataToFile(data) {
+    fs.writeFileSync(__dirname + "/db.json", JSON.stringify(data, null, 2));
+  }
 
-// Write data to JSON file
-function writeDataToFile(data) {
-  fs.writeFileSync(__dirname + "/db.json", JSON.stringify(data, null, 2));
-}
 
 server.get('/api/user', (req, res) => {
+  //const users = router.db.get('user').value();
   const data = readDataFromFile();
   console.log(data)
   res.json(data.user);
@@ -281,7 +37,7 @@ server.get('/api/user', (req, res) => {
 
 server.get('/getblood', (req, res) => {
   const data = readDataFromFile();
-  const { group, type } = req.body;
+  const { group,type} = req.body;
   console.log(data);
   const bloodGroup = data.blood.find(blood => Object.keys(blood)[0] === group);
 
@@ -309,6 +65,9 @@ server.post('/api/user', (req, res) => {
     role,
     image
   };
+
+  // router.db.get('user').push(newUser).write();
+  // res.status(201).json(newUser);
 
   const data = readDataFromFile();
   //console.log("56",data.user)
@@ -471,6 +230,249 @@ server.use(router);
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+
+
+//final code .
+// const jsonServer = require("json-server");
+// const server = jsonServer.create();
+// const router = jsonServer.router("db.json");
+// const middlewares = jsonServer.defaults();
+// const cors = require('cors');
+// const port = process.env.PORT || 3030;
+// const fs = require("fs");
+
+// server.use(cors());
+
+// // Update the CORS configuration to allow multiple origins
+// const whitelist = ['http://localhost:3030', 'https://jsonserver-iota.vercel.app'];
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+//   methods: ['GET', 'PUT', 'POST', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true
+// };
+// server.use(cors(corsOptions));
+
+// server.use(middlewares);
+// server.use(jsonServer.bodyParser);
+
+// // Read data from JSON file
+// function readDataFromFile() {
+//   const rawData = fs.readFileSync(__dirname + "/db.json");
+//   return JSON.parse(rawData);
+// }
+
+// // Write data to JSON file
+// function writeDataToFile(data) {
+//   fs.writeFileSync(__dirname + "/db.json", JSON.stringify(data, null, 2));
+// }
+
+// server.get('/api/user', (req, res) => {
+//   const data = readDataFromFile();
+//   console.log(data)
+//   res.json(data.user);
+// });
+
+// server.get('/getblood', (req, res) => {
+//   const data = readDataFromFile();
+//   const { group, type } = req.body;
+//   console.log(data);
+//   const bloodGroup = data.blood.find(blood => Object.keys(blood)[0] === group);
+
+//   if (type == 'donner') {
+//     res.json(bloodGroup[group][0])
+//   } 
+//   if (type == 'acceptor') {
+//     res.json(bloodGroup[group][1]);
+//   } 
+// });
+
+
+// server.post('/api/user', (req, res) => {
+//   const { name, email, password, role, image } = req.body;
+
+//   if (!name || !email || !password || !role) {
+//     return res.status(400).json({ error: "Please provide name, email, password, and role" });
+//   }
+//   console.log("42",req.body);
+//   const newUser = {
+//     id: Math.random().toString(36).substr(2, 9), 
+//     name,
+//     email,
+//     password,
+//     role,
+//     image
+//   };
+
+//   const data = readDataFromFile();
+//   console.log("56",data.user)
+//   data.user.push(newUser);
+//   writeDataToFile(data);
+//   res.status(201).json(newUser);
+// });
+
+// server.post('/api/product', (req, res) => {
+//   const { name, price, color, weight, by } = req.body;
+
+//   if (!name || !price || !color || !weight || !by) {
+//     return res.status(400).json({ error: "Please provide name, price, color, weight, and by" });
+//   }
+
+//   const newProduct = {
+//     id: Math.random().toString(36).substr(2, 9),
+//     name,
+//     price,
+//     color,
+//     weight,
+//     by
+//   };
+
+//   router.db.get('product').push(newProduct).write();
+//   res.status(201).json(newProduct);
+// });
+
+// server.put('/api/product/:id', (req, res) => {
+//   const productId = req.params.id;
+//   const { name, price, color, weight, by } = req.body;
+
+//   // Find the product by ID
+//   const product = router.db.get('product').find({ id: productId }).value();
+
+//   if (!product) {
+//     return res.status(404).json({ error: "Product not found" });
+//   }
+
+//   // Update the product properties if provided
+//   if (name) {
+//     product.name = name;
+//   }
+//   if (price) {
+//     product.price = price;
+//   }
+//   if (color) {
+//     product.color = color;
+//   }
+//   if (weight) {
+//     product.weight = weight;
+//   }
+//   if (by) {
+//     product.by = by;
+//   }
+
+//   // Update the product in the database
+//   router.db.get('product').find({ id: productId }).assign(product).write();
+
+//   res.json(product);
+// });
+
+// server.put('/api/product/:id', (req, res) => {
+//   const productId = req.params.id;
+//   const { name, price, color, weight, by } = req.body;
+
+//   const product = router.db.get('product').find({ id: productId }).value();
+
+//   if (!product) {
+//     return res.status(404).json({ error: "Product not found" });
+//   }
+
+//   const updatedProduct = {
+//     ...product,
+//     name: name || product.name,
+//     price: price || product.price,
+//     color: color || product.color,
+//     weight: weight || product.weight,
+//     by: by || product.by
+//   };
+
+//   router.db.get('product').find({ id: productId }).assign(updatedProduct).write();
+  
+//   res.json(updatedProduct);
+// });
+
+// server.put('/api/user/:id', (req, res) => {
+//   const userId = req.params.id;
+//   const { name, email, password, role, image } = req.body;
+
+//   const user = router.db.get('user').find({ id: userId }).value();
+
+//   if (!user) {
+//     return res.status(404).json({ error: "User not found" });
+//   }
+
+//   // Update user properties if provided in the request body
+//   user.name = name || user.name;
+//   user.email = email || user.email;
+//   user.password = password || user.password;
+//   user.role = role || user.role;
+//   user.image = image || user.image;
+
+//   // Update the user in the database
+//   router.db.get('user').find({ id: userId }).assign(user).write();
+
+//   res.json(user);
+// });
+
+
+// server.delete('/api/user/:id', (req, res) => {
+//   const userId = req.params.id;
+
+//   const user = router.db.get('user').find({ id: userId }).value();
+
+//   if (!user) {
+//     return res.status(404).json({ error: "User not found" });
+//   }
+
+//   // Remove the user from the database
+//   router.db.get('user').remove({ id: userId }).write();
+
+//   res.json({ message: "User deleted successfully", deletedUser: user });
+// });
+
+
+// const jwt = require('jsonwebtoken');
+// const bcrypt = require('bcrypt');
+
+// server.get('/api/login', (req, res) => {
+//   const { email, password } = req.body;
+//   console.log(email,password)
+//   // Check if email and password are provided
+//   if (!email || !password) {
+//     return res.status(400).json({ error: "Please provide email and password" });
+//   }
+
+//   const user = router.db.get('user').find({ email: email }).value();
+//   if (!user) {
+//     return res.status(404).json({ error: "User not found" });
+//   }
+
+//   // bcrypt.compare(password, user.password, (err, result) => {
+//   //   if (err) {
+//   //     return res.status(500).json({ error: "Internal server error" });
+//   //   }
+
+//   //   if (!result) {
+//   //     return res.status(401).json({ error: "Invalid password" });
+//   //   }
+//   // });
+
+//   const token = jwt.sign({ id: user.id, name:user.name, role:user.role, email: user.email }, 'your_secret_key', { expiresIn: '1h' });
+//   res.json({ message: "Login successful", token: token });
+// });
+
+
+// server.use(router);
+
+// server.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
 
 
 
